@@ -4,6 +4,7 @@ import pandas as pd
 from requests_html import HTMLSession
 import os
 import json
+import re
 
 app = Flask(__name__)
 
@@ -21,6 +22,11 @@ def table(sys_name):
 
     colnames = data['columns']
     data = data['data'] # delicious naming
+    
+    # дописываю названия кластеров бещ пробелов, чтобы использовать их в параметре
+    # не стал делать этого в темплейте
+    for cluster in data:
+        cluster[0] = re.sub(' ','_',cluster[0])        
 
     return render_template(template, name = sys_name, colnames = colnames, data=data)
 
