@@ -57,6 +57,8 @@ def purify_cluster_data(data):
         for i, v in enumerate(cluster):
             if isinstance(v, float):
                 cluster[i] = int(v)
+            if v == 0:
+                cluster[i]=''
     return data
 
 
@@ -64,5 +66,5 @@ def merge_clusters(args):
     print('saved cluster')
     print(args)
     print(type(args))
-    
+
     return 0
