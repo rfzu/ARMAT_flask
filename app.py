@@ -1,4 +1,4 @@
-from flask import Flask, Markup, render_template, jsonify
+from flask import Flask, Markup, render_template, jsonify, request
 
 import pandas as pd
 from requests_html import HTMLSession
@@ -12,7 +12,10 @@ app = Flask(__name__)
 # TBD динамическая генерация страниц в зависимости от имени системы в URL
 # сейчас темплэйт есть только для Транзакта
 def table(sys_name):
-    print(sys_name)
+    # merge clusters if any
+    if len(request.args) > 0:
+        merge_clusters(request.args)
+
     template = "table_" + sys_name + ".html"
 
     ### получаем JSON с данными по кластерам 
@@ -56,3 +59,10 @@ def purify_cluster_data(data):
                 cluster[i] = int(v)
     return data
 
+
+def merge_clusters(args):
+    print('saved cluster')
+    print(args)
+    print(type(args))
+    
+    return 0
