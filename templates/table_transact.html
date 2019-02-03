@@ -2,14 +2,53 @@
 <html>
 
 <head>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	<title>
-		{{ name }} class data
+		{{ name }} cluster data
 	</title>
+
+	<style>
+		table, th, td {
+		  border: 1px solid black;
+		}
+	</style>
+
 </head>
 
 <body>
-	hui pizda
-	{{ data }}
+	<!-- {{ colnames }} -->
+	<br>
+	<form>
+		<div>
+	    	<button type="join_clusters">Объединить кластеры</button>
+	    	sимя нового кластера:
+	   		<input type="text" size="40">
+	  	</div>
+	  	<br>
+
+	    <div class="table-clusters">
+	        <table class="table" id="clusters" border-collapse="collapse">
+	        	<thread>
+	        		<tr>
+	        			<th scope="col">chechbox</th>
+	        			{% for colname in colnames: %}
+	    				<th scope="col">{{ colname }}</th>
+	        			{% endfor %}
+	        		</tr>
+	        	</thread>
+	        	<tbody>
+	        		{% for cluster in data %}
+	        			<tr id="{{ cluster[0] }}">
+	        				<td><input type="checkbox" name = {{ cluster[0] }}></td>
+		        			{% for v in cluster %}
+								<td>{{ v }}</td>
+		        			{% endfor %}
+		        		</tr>
+	        		{% endfor %}
+	        	</tbody>
+	        </table>
+	    </div>
+	</form>
 </body>
 
 </html>
