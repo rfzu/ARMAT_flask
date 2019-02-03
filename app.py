@@ -21,12 +21,7 @@ def table(sys_name):
     ###
 
     colnames = data['columns']
-    data = data['data'] # delicious naming
-    
-    # дописываю названия кластеров бещ пробелов, чтобы использовать их в параметре
-    # не стал делать этого в темплейте
-    for cluster in data:
-        cluster[0] = re.sub(' ','_',cluster[0])        
+    data = purify_cluster_data(data['data']) # delicious naming
 
     return render_template(template, name = sys_name, colnames = colnames, data=data)
 
@@ -50,3 +45,14 @@ def get_data_from_file():
     json_data = open('trash_tmp/data.json').read()
     data = json.loads(json_data)
     return data
+
+def purify_cluster_data(data):
+    for cluster in data:
+        # дописываю названия кластеров без пробелов, чтобы использовать их в параметре
+        # не стал делать этого в темплейте        
+        cluster[0] = re.sub(' ','_',cluster[0])
+        for i, v in enumerate(cluster):
+            if isinstance(v, float):
+                cluster[i] = int(v)
+    return data
+
